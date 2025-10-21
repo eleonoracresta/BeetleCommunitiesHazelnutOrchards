@@ -30,7 +30,7 @@ df_filtrato$Anno <- as.factor(df_filtrato$Anno)
 # GLM negative binomial random effect
 
 # Modello 1: Only species GEORGIA
-mod1G <- glmer.nb(Count ~ Species + (1 | Anno) + (1 | Code/Block),
+mod1G <- glmer.nb(Count ~ Species + (1 | Anno) + (1 | Code),
                  data = subset(df_filtrato, 
                                Country == "Georgia" & 
                                  Species != "X. monographus"))
@@ -83,7 +83,7 @@ df_filtrato <- merge(df_filtrato, periodi_trappole[, c("Country", "Anno", "TotTr
 
 #Modello per standardizzare sforzo di campionamento_OFFSET(LOG)#Country comparison
 mod_offset_3G <- glmer.nb(
-  Count ~ Country + offset(log(TotTrapDays)) + (1 | Anno) + (1 | Code/Block),
+  Count ~ Country + offset(log(TotTrapDays)) + (1 | Anno) + (1 | Code),
   data = df_filtrato
 )
 
@@ -216,7 +216,7 @@ ggsave("barplot_country_effect.png",       # nome file
 df_subset <- subset(df_filtrato, Species == "X. saxesenii")
 # Costruisci il modello
 mod3.1G_sax <- glmer.nb(Count ~ Country + offset(log(TotTrapDays))
-                        + (1 | Anno) + (1 | Code/Block), data = df_subset)
+                        + (1 | Anno) + (1 | Code), data = df_subset)
 
 ##Controllo overdispersion
 overdisp_fun <- function(model) {
@@ -287,7 +287,7 @@ ggsave("barplot_SingleCountry_effect_Xsaxesenii.png",       # nome file
 df_subset <- subset(df_filtrato, Species == "X. germanus")
 # Costruisci il modello
 mod3.1G_ger <- glmer.nb(Count ~ Country + offset(log(TotTrapDays)) +
-                        (1 | Anno) + (1 | Code/Block), data = df_subset)
+                        (1 | Anno) + (1 | Code), data = df_subset)
 
 ##Controllo overdispersion
 overdisp_fun <- function(model) {
@@ -359,7 +359,7 @@ ggsave("barplot_SingleCountry_effect_Xgermanus.png",       # nome file
 df_subset <- subset(df_filtrato, Species == "A. dispar")
 # Costruisci il modello
 mod3.1G_dis <- glmer.nb(Count ~ Country + offset(log(TotTrapDays)) +
-                          (1 | Anno) + (1 | Code/Block), data = df_subset)
+                          (1 | Anno) + (1 | Code), data = df_subset)
 
 ##Controllo overdispersion
 overdisp_fun <- function(model) {
@@ -431,7 +431,7 @@ ggsave("barplot_SingleCountry_effect_Adispar.png",       # nome file
 df_subset <- subset(df_filtrato, Species == "H. eruditus")
 # Costruisci il modello
 mod3.1G_eru <- glmer.nb(Count ~ Country + offset(log(TotTrapDays)) +
-                          (1 | Anno) + (1 | Code/Block), data = df_subset)
+                          (1 | Anno) + (1 | Code), data = df_subset)
 
 ##Controllo overdispersion
 overdisp_fun <- function(model) {
